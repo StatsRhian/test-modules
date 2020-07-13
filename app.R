@@ -3,10 +3,10 @@ source("slider-module.R")
 source("categoryPanel-module.R")
 ui = navbarPage("Testing Shiny modules",
                navlistPanel(
-                   id = "test",
-                   categoryPanelUI("A"),
-                   categoryPanelUI("B"),
-                   categoryPanelUI("C")
+                   id = "letter",
+                   categoryPanelUI("A", nice = "Apple"),
+                   categoryPanelUI("B", nice = "Banana"),
+                   categoryPanelUI("C", nice = "Carrot")
                )
     )
 
@@ -27,7 +27,6 @@ server = function(input, output, session) {
     setBookmarkExclude(c("A-one-slider", "A-two-slider", 
                          "B-one-slider", "B-two-slider",
                          "C-one-slider", "C-two-slider"))
-    
     }
 
 shinyApp(ui = ui, server = server, enableBookmarking = "url")
