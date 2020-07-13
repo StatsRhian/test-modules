@@ -10,10 +10,24 @@ ui = navbarPage("Testing Shiny modules",
                )
     )
 
-server = function(input, output) {
+server = function(input, output, session) {
     callModule(categoryPanel, "A")
     callModule(categoryPanel, "B")
     callModule(categoryPanel, "C")
-}
 
-shinyApp(ui = ui, server = server)
+    observe({
+      # Trigger this observer every time an input changes
+      reactiveValuesToList(input)
+      session$doBookmark()
+    })
+    onBookmarked(function(url) {
+      updateQueryString(url)
+    })
+    
+    setBookmarkExclude(c("A-one-slider", "A-two-slider", 
+                         "B-one-slider", "B-two-slider",
+                         "C-one-slider", "C-two-slider"))
+    
+    }
+
+shinyApp(ui = ui, server = server, enableBookmarking = "url")
